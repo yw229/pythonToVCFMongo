@@ -37,8 +37,8 @@ class UpdateVcfMongo:
 			f = dinst.my(arr)
 			d = dinst.dToString(f)
                         for i in range(l):
-				vcfColl.update({'Sample_ID':r.samples[i].sample,'CHROM':r.CHROM,'POS':r.POS,'alt':str(r.ALT) },{'$set':{'QUAL':r.QUAL}}, upsert = True, multi =  True )
-				vcfColl.update({'Sample_ID':r.samples[i].sample,'CHROM':r.CHROM,'POS':r.POS, 'alt':str(r.ALT) },{'$set': d }, upsert = True, multi =  True )
+				vcfColl.update({'Sample_ID':r.samples[i].sample,'CHROM':r.CHROM,'POS':r.POS,'REF':r.REF,'alt':str(r.ALT) },{'$set':{'QUAL':r.QUAL}}, upsert = True, multi =  True )
+				vcfColl.update({'Sample_ID':r.samples[i].sample,'CHROM':r.CHROM,'POS':r.POS,'REF':r.REF,'alt':str(r.ALT) },{'$set': d }, upsert = True, multi =  True )
 				                       
                 return vcfColl
 	
@@ -55,7 +55,7 @@ class UpdateVcfMongo:
 				for eachV in singleSampleSet.data:
 					FormatValues.append(eachV)
 					FormatMap = dict(zip(FormatKeys,FormatValues))	
-                       		vcfColl.update({'Sample_ID':singleSampleSet.sample,'CHROM':r.CHROM,'POS':r.POS,'alt':str(r.ALT)},FormatMap, upsert = True, multi =  True )
+                       		vcfColl.update({'Sample_ID':singleSampleSet.sample,'CHROM':r.CHROM,'POS':r.POS,'REF':r.REF,'alt':str(r.ALT)},{'$set':FormatMap}, upsert = True, multi =  True )
                 return vcfColl
 
 	def UpsertInfoVcfMongo(self):
@@ -69,13 +69,13 @@ class UpdateVcfMongo:
 			sampleSets = r.samples
                         l = len(sampleSets)
 			for i in range(l):
-				vcfColl.update({'Sample_ID':r.samples[i].sample,'CHROM':r.CHROM,'POS':r.POS,'alt':str(r.ALT) },{'$set': infoD }, upsert = True, multi =  True )
+				vcfColl.update({'Sample_ID':r.samples[i].sample,'CHROM':r.CHROM,'POS':r.POS,'alt':str(r.ALT),'REF':r.REF },{'$set': infoD }, upsert = True, multi =  True )
 		return vcfColl
 
 	def PrintVcfInsert(self):
 		result = self.InsertIntoVcfMongo()
 #		for p in result.find():
-#			print p 
+#				print p 
      		
 	def PrintVcfUpsert(self):
                 result = self.UpsertIntoVcfMongo()

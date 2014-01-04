@@ -15,6 +15,6 @@ for path in glob.glob(directory):
 
         #ex.PrintVcfUpsert()
 
-        ex.PrintVcfUpsertFormat()
+	ex.PrintVcfUpsertFormat()
 
         #ex.PrintVcfUpsertINFO()
